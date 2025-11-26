@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<brmodel>
+  <project name="LABORATORIO_PROTESE">
+    
+    <model type="logical">
+
+      <table name="CLIENTE">
+        <field name="ID_CLIENTE" type="INT" pk="true"/>
+        <field name="NOME" type="VARCHAR(100)"/>
+        <field name="CPF" type="CHAR(11)"/>
+        <field name="TELEFONE" type="VARCHAR(15)"/>
+        <field name="EMAIL" type="VARCHAR(100)"/>
+        <field name="DATA_NASCIMENTO" type="DATE"/>
+      </table>
+
+      <table name="DENTISTA">
+        <field name="ID_DENTISTA" type="INT" pk="true"/>
+        <field name="NOME" type="VARCHAR(100)"/>
+        <field name="CRO" type="VARCHAR(20)"/>
+        <field name="TELEFONE" type="VARCHAR(15)"/>
+        <field name="EMAIL" type="VARCHAR(100)"/>
+      </table>
+
+      <table name="PROTETICO">
+        <field name="ID_PROTETICO" type="INT" pk="true"/>
+        <field name="NOME" type="VARCHAR(100)"/>
+        <field name="ESPECIALIDADE" type="VARCHAR(50)"/>
+        <field name="TELEFONE" type="VARCHAR(15)"/>
+        <field name="EMAIL" type="VARCHAR(100)"/>
+      </table>
+
+      <table name="PEDIDO">
+        <field name="ID_PEDIDO" type="INT" pk="true"/>
+        <field name="DATA_PEDIDO" type="DATE"/>
+        <field name="STATUS" type="VARCHAR(30)"/>
+        <field name="OBSERVACOES" type="TEXT"/>
+        <field name="ID_CLIENTE" type="INT" fk="CLIENTE.ID_CLIENTE"/>
+        <field name="ID_DENTISTA" type="INT" fk="DENTISTA.ID_DENTISTA"/>
+      </table>
+
+      <table name="PROTESE">
+        <field name="ID_PROTESE" type="INT" pk="true"/>
+        <field name="TIPO" type="VARCHAR(50)"/>
+        <field name="MATERIAL" type="VARCHAR(50)"/>
+        <field name="COR" type="VARCHAR(30)"/>
+        <field name="VALOR" type="DECIMAL(10,2)"/>
+        <field name="ID_PEDIDO" type="INT" fk="PEDIDO.ID_PEDIDO"/>
+      </table>
+
+      <table name="ETAPA_PRODUCAO">
+        <field name="ID_ETAPA" type="INT" pk="true"/>
+        <field name="NOME_ETAPA" type="VARCHAR(50)"/>
+        <field name="DATA_INICIO" type="DATE"/>
+        <field name="DATA_FIM" type="DATE"/>
+        <field name="STATUS" type="VARCHAR(30)"/>
+        <field name="ID_PEDIDO" type="INT" fk="PEDIDO.ID_PEDIDO"/>
+      </table>
+
+      <table name="PEDIDO_PROTETICO">
+        <field name="ID_PEDIDO" type="INT" pk="true" fk="PEDIDO.ID_PEDIDO"/>
+        <field name="ID_PROTETICO" type="INT" pk="true" fk="PROTETICO.ID_PROTETICO"/>
+        <field name="FUNCAO" type="VARCHAR(50)"/>
+        <field name="DATA_INICIO" type="DATE"/>
+      </table>
+
+    </model>
+  </project>
+</brmodel>
