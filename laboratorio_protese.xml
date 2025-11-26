@@ -1,68 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<brmodel>
-  <project name="LABORATORIO_PROTESE">
-    
-    <model type="logical">
+<project>
+  <model type="logical">
 
-      <table name="CLIENTE">
-        <field name="ID_CLIENTE" type="INT" pk="true"/>
-        <field name="NOME" type="VARCHAR(100)"/>
-        <field name="CPF" type="CHAR(11)"/>
-        <field name="TELEFONE" type="VARCHAR(15)"/>
-        <field name="EMAIL" type="VARCHAR(100)"/>
-        <field name="DATA_NASCIMENTO" type="DATE"/>
-      </table>
+    <table name="CLIENTE">
+      <column name="ID_CLIENTE" type="INT" primaryKey="true" />
+      <column name="NOME" type="VARCHAR(100)" />
+      <column name="CPF" type="CHAR(11)" unique="true" />
+      <column name="DATA_NASCIMENTO" type="DATE" />
+      <column name="TELEFONE" type="VARCHAR(20)" />
+    </table>
 
-      <table name="DENTISTA">
-        <field name="ID_DENTISTA" type="INT" pk="true"/>
-        <field name="NOME" type="VARCHAR(100)"/>
-        <field name="CRO" type="VARCHAR(20)"/>
-        <field name="TELEFONE" type="VARCHAR(15)"/>
-        <field name="EMAIL" type="VARCHAR(100)"/>
-      </table>
+    <table name="DENTISTA">
+      <column name="ID_DENTISTA" type="INT" primaryKey="true" />
+      <column name="NOME" type="VARCHAR(100)" />
+      <column name="CRO" type="VARCHAR(20)" unique="true" />
+      <column name="TELEFONE" type="VARCHAR(20)" />
+    </table>
 
-      <table name="PROTETICO">
-        <field name="ID_PROTETICO" type="INT" pk="true"/>
-        <field name="NOME" type="VARCHAR(100)"/>
-        <field name="ESPECIALIDADE" type="VARCHAR(50)"/>
-        <field name="TELEFONE" type="VARCHAR(15)"/>
-        <field name="EMAIL" type="VARCHAR(100)"/>
-      </table>
+    <table name="PROTETICO">
+      <column name="ID_PROTETICO" type="INT" primaryKey="true" />
+      <column name="NOME" type="VARCHAR(100)" />
+      <column name="ESPECIALIDADE" type="VARCHAR(50)" />
+    </table>
 
-      <table name="PEDIDO">
-        <field name="ID_PEDIDO" type="INT" pk="true"/>
-        <field name="DATA_PEDIDO" type="DATE"/>
-        <field name="STATUS" type="VARCHAR(30)"/>
-        <field name="OBSERVACOES" type="TEXT"/>
-        <field name="ID_CLIENTE" type="INT" fk="CLIENTE.ID_CLIENTE"/>
-        <field name="ID_DENTISTA" type="INT" fk="DENTISTA.ID_DENTISTA"/>
-      </table>
+    <table name="PEDIDO">
+      <column name="ID_PEDIDO" type="INT" primaryKey="true" />
+      <column name="DATA_PEDIDO" type="DATE" />
+      <column name="STATUS_PEDIDO" type="VARCHAR(30)" />
 
-      <table name="PROTESE">
-        <field name="ID_PROTESE" type="INT" pk="true"/>
-        <field name="TIPO" type="VARCHAR(50)"/>
-        <field name="MATERIAL" type="VARCHAR(50)"/>
-        <field name="COR" type="VARCHAR(30)"/>
-        <field name="VALOR" type="DECIMAL(10,2)"/>
-        <field name="ID_PEDIDO" type="INT" fk="PEDIDO.ID_PEDIDO"/>
-      </table>
+      <column name="ID_CLIENTE" type="INT" foreignKey="true" reference="CLIENTE.ID_CLIENTE" />
+      <column name="ID_DENTISTA" type="INT" foreignKey="true" reference="DENTISTA.ID_DENTISTA" />
+    </table>
 
-      <table name="ETAPA_PRODUCAO">
-        <field name="ID_ETAPA" type="INT" pk="true"/>
-        <field name="NOME_ETAPA" type="VARCHAR(50)"/>
-        <field name="DATA_INICIO" type="DATE"/>
-        <field name="DATA_FIM" type="DATE"/>
-        <field name="STATUS" type="VARCHAR(30)"/>
-        <field name="ID_PEDIDO" type="INT" fk="PEDIDO.ID_PEDIDO"/>
-      </table>
+    <table name="PROTESE">
+      <column name="ID_PROTESE" type="INT" primaryKey="true" />
+      <column name="TIPO" type="VARCHAR(50)" />
+      <column name="MATERIAL" type="VARCHAR(50)" />
+      <column name="COR" type="VARCHAR(30)" />
 
-      <table name="PEDIDO_PROTETICO">
-        <field name="ID_PEDIDO" type="INT" pk="true" fk="PEDIDO.ID_PEDIDO"/>
-        <field name="ID_PROTETICO" type="INT" pk="true" fk="PROTETICO.ID_PROTETICO"/>
-        <field name="FUNCAO" type="VARCHAR(50)"/>
-        <field name="DATA_INICIO" type="DATE"/>
-      </table>
+      <column name="ID_PEDIDO" type="INT" foreignKey="true" reference="PEDIDO.ID_PEDIDO" />
+    </table>
 
-    </model>
-  </project>
-</brmodel>
+    <table name="ETAPA_PRODUCAO">
+      <column name="ID_ETAPA" type="INT" primaryKey="true" />
+      <column name="NOME_ETAPA" type="VARCHAR(100)" />
+      <column name="DATA_INICIO" type="DATE" />
+      <column name="DATA_FIM" type="DATE" />
+      <column name="STATUS_ETAPA" type="VARCHAR(30)" />
+
+      <column name="ID_PEDIDO" type="INT" foreignKey="true" reference="PEDIDO.ID_PEDIDO" />
+    </table>
+
+    <table name="PEDIDO_PROTETICO">
+      <column name="ID_PEDIDO" type="INT" foreignKey="true" reference="PEDIDO.ID_PEDIDO" />
+      <column name="ID_PROTETICO" type="INT" foreignKey="true" reference="PROTETICO.ID_PROTETICO" />
+      <column name="FUNCAO" type="VARCHAR(50)" />
+
+      <primaryKey>
+        <column name="ID_PEDIDO"/>
+        <column name="ID_PROTETICO"/>
+      </primaryKey>
+    </table>
+
+  </model>
+</project>
